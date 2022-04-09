@@ -65,11 +65,15 @@ namespace OverpoweredGoldDust
         public static readonly bool[] IsSquirrelNotGold = NPCID.Sets.Factory.CreateBoolSet(NPCID.Squirrel, NPCID.SquirrelRed, NPCID.GemSquirrelTopaz, NPCID.GemSquirrelSapphire, NPCID.GemSquirrelRuby, NPCID.GemSquirrelEmerald, NPCID.GemSquirrelDiamond, NPCID.GemSquirrelAmethyst, NPCID.GemSquirrelAmber);
         public static readonly bool[] IsButterflyNotGold = NPCID.Sets.Factory.CreateBoolSet(NPCID.Butterfly, NPCID.HellButterfly, NPCID.EmpressButterfly);
         public static readonly bool[] IsBirdNotGold = NPCID.Sets.Factory.CreateBoolSet(NPCID.Bird, NPCID.BirdBlue, NPCID.BirdRed);
+        public static readonly bool[] IsSlime = NPCID.Sets.Factory.CreateBoolSet(1, 147, 537, 184, 204, 16, 59, 71, 667, 50, 535, 225, 302, 333, 334, 335, 336, 141, 81, 121, 183, 122, 138, 244, 657, 658, 659, 660, 304);
 
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 var myRect = hitbox;
                 foreach (var npc in from n in Main.npc where n.active && myRect.Intersects(n.getRect()) select n) {
+                    if (IsSlime[npc.type] && !npc.boss && npc.aiStyle == NPCAIStyleID.Slime && npc.type != NPCID.GoldenSlime) {
+                        npc.Transform(NPCID.GoldenSlime);
+                    }
                     if (IsBunnyNotGold[npc.type]) {
                         npc.Transform(NPCID.GoldBunny);
                     }
