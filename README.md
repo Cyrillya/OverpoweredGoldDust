@@ -3,3 +3,4 @@ A mod that makes gold dust able to turn critters, slimes and stones into gold.
 
 ![点兔成金](https://user-images.githubusercontent.com/35227653/162561253-a34eaa92-dc68-4f4a-96c2-39fe1738dfc5.gif)
 ![点石成金](https://user-images.githubusercontent.com/35227653/162561256-86ac43d1-808a-4771-a331-291f2f4db596.gif)
+![点史成金](https://user-images.githubusercontent.com/35227653/162584392-a56c0a48-969b-4c79-81fb-f5c73edaf36f.gif)
