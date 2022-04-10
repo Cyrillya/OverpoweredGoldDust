@@ -1,7 +1,0 @@
-Mods: {
-	OverpoweredGoldDust: {
-		ItemTooltip: {
-			GoldDust: 传播黄金
-		}
-	}
-}

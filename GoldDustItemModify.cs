@@ -8,17 +8,16 @@ namespace OverpoweredGoldDust
 {
     internal class GoldDustItemModify : GlobalItem
     {
-        public override bool AppliesToEntity(Item item, bool lateInstatiation) {
-            return item.type == ItemID.GoldDust;
-        }
-
         public override void SetDefaults(Item item) {
+            if (item.type != ItemID.GoldDust)
+                return;
+
             item.consumable = true;
             item.useAnimation = 15;
             item.useTime = 15;
             item.shootSpeed = 4f;
             item.shoot = ModContent.ProjectileType<GoldDust>();
-            item.useStyle = ItemUseStyleID.Swing;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.width = 16;
             item.height = 24;
             item.UseSound = SoundID.Item1;
@@ -26,9 +25,11 @@ namespace OverpoweredGoldDust
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
-            int i;
-            var tooltip = new TooltipLine(Mod, "GoldDustAddition", Language.GetTextValue("Mods.OverpoweredGoldDust.ItemTooltip.GoldDust"));
-            for (i = 0; i < tooltips.Count; i++) {
+            if (item.type != ItemID.GoldDust)
+                return;
+
+            var tooltip = new TooltipLine(mod, "GoldDustAddition", Language.GetTextValue("Mods.OverpoweredGoldDust.ItemTooltip.GoldDust"));
+            for (int i = 0; i < tooltips.Count; i++) {
                 if (tooltips[i].mod == "Terraria" && tooltips[i].Name == "Material") {
                     tooltips.Insert(i + 1, tooltip);
                     return;
@@ -38,15 +39,15 @@ namespace OverpoweredGoldDust
         }
 
         public override void AddRecipes() {
-            Mod.CreateRecipe(ItemID.GoldDust, 1)
-                .AddIngredient(ItemID.GoldBar)
-                .AddTile(TileID.Anvils)
-                .Register();
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.GoldBar);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(ItemID.GoldDust);
 
-            Mod.CreateRecipe(ItemID.GoldDust, 1)
-                .AddIngredient(ItemID.PlatinumBar)
-                .AddTile(TileID.Anvils)
-                .Register();
+            recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.PlatinumBar);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(ItemID.GoldDust);
         }
     }
 }
