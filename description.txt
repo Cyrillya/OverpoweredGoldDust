@@ -1,9 +1,11 @@
 ﻿This mod gives gold dust the ability to turn stones, critters and slimes into gold!
+It can also turn basic chests (wooden chests) into golden chests.
 The mod also adds a crafting recipe for gold dust so you can get it pre-hardmode:
 [i:19]/[i:706] -> [i:1348]
 
 此Mod给予金尘点石成金的能力.
 你现在可以用它来将石头、小动物和史莱姆变成金子!
+它还可以将基本箱子（木制箱子）变成金色箱子.
 该Mod同时为金尘添加了一个合成配方，你可以在肉前就获得它:
 [i:19]/[i:706] -> [i:1348]
 

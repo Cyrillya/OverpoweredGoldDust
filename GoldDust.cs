@@ -13,6 +13,7 @@ namespace OverpoweredGoldDust
             Projectile.aiStyle = -1;
         }
 
+        public static readonly int[] BasicChestFrameX = { 0, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 28, 29, 30, 31, 32, 33 };
         public override void AI() {
             Projectile.velocity *= 0.95f;
             Projectile.ai[0] += 1f;
@@ -57,6 +58,23 @@ namespace OverpoweredGoldDust
                             NetMessage.SendTileSquare(-1, i, j);
                     }
 
+                    if (t.TileType == TileID.Containers || t.TileType == TileID.FakeContainers && BasicChestFrameX.Contains(t.TileFrameX / 36)) {
+                        // the left-top position of the chest
+                        Point key = new Point(i, j);
+                        if (t.TileFrameX % 36 != 0)
+                            key.X--;
+                        if (t.TileFrameY % 36 != 0)
+                            key.Y--;
+
+                        for (int k = 0; k <= 1; k++) {
+                            for (int l = 0; l <= 1; l++) {
+                                Main.tile[key.X + k, key.Y + l].TileFrameX = (short)(36 + 18 * k);
+                            }
+                        }
+
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(-1, key.X, key.Y, 2, 2);
+                    }
                 }
             }
         }

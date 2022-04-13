@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +21,10 @@ namespace OverpoweredGoldDust
                 lightScale = 1f;
             Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), lightScale, lightScale * 0.7f, lightScale * 0.2f);
             return base.Update(dust);
+        }
+
+        public override Color? GetAlpha(Dust dust, Color lightColor) {
+            return new Color(lightColor.R, lightColor.G, lightColor.B, 25);
         }
     }
 }
