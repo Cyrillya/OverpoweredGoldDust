@@ -13,7 +13,15 @@ namespace OverpoweredGoldDust
             Projectile.aiStyle = -1;
         }
 
-        public static readonly int[] BasicChestFrameX = { 0, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 28, 29, 30, 31, 32, 33 };
+        public static readonly int[] BasicDoorsFrameY = { 0, 1, 2, 3, 7, 10, 13, 25, 26, 28, 29, 30 };
+        public static readonly int[] BasicWorkBenchesFrameX = { 0, 1, 2, 17, 18, 22, 23, 26 };
+        public static readonly int[] BasicChairsFrameY = { 0, 1, 2, 3, 4, 5, 11, 29, 30 };
+        public static readonly int[] BasicTablesFrameX = { 0, 1, 2, 3, 6, 8, 16, 26, 28 };
+        public static readonly int[] BasicPlatformsFrameY = { 0, 1, 2, 3, 5, 17, 19, 23, 43 };
+        public static readonly int[] BasicChestsFrameX = { 0, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 28, 29, 30, 31, 32, 33 };
+        public static readonly bool[] WoodBlocks = TileID.Sets.Factory.CreateBoolSet(TileID.WoodBlock, TileID.BorealWood, TileID.DynastyWood, TileID.LivingWood, TileID.PalmWood, TileID.SpookyWood, TileID.Ebonwood, TileID.Pearlwood, TileID.Shadewood);
+        public static readonly bool[] WoodWalls = WallID.Sets.Factory.CreateBoolSet(WallID.BorealWood, WallID.Wood, WallID.BlueDynasty, WallID.WhiteDynasty, WallID.LivingWood, WallID.PalmWood, WallID.SpookyWood, WallID.Ebonwood, WallID.Pearlwood, WallID.Shadewood);
+        public static readonly bool[] DirtWalls = WallID.Sets.Factory.CreateBoolSet(WallID.Dirt, WallID.DirtUnsafe, WallID.DirtUnsafe1, WallID.DirtUnsafe2, WallID.DirtUnsafe3, WallID.DirtUnsafe4, WallID.CaveUnsafe, WallID.Cave2Unsafe, WallID.Cave3Unsafe, WallID.Cave4Unsafe, WallID.Cave5Unsafe, WallID.Cave6Unsafe, WallID.Cave7Unsafe, WallID.Cave8Unsafe);
         public override void AI() {
             Projectile.velocity *= 0.95f;
             Projectile.ai[0] += 1f;
@@ -47,10 +55,21 @@ namespace OverpoweredGoldDust
             for (int i = startX; i < endX; i++) {
                 for (int j = startY; j < endY; j++) {
                     var worldPosition = new Vector2(i << 4, j << 4);
-                    if (!(Projectile.Right.X > worldPosition.X) || !(Projectile.Left.X < worldPosition.X + 16f) || !(Projectile.Bottom.Y > worldPosition.Y) || !(Projectile.Top.Y < worldPosition.Y + 16f) || Main.myPlayer != Projectile.owner || !Main.tile[i, j].HasTile)
+                    Tile t = Framing.GetTileSafely(i, j);
+
+                    if (!(Projectile.Right.X > worldPosition.X) || !(Projectile.Left.X < worldPosition.X + 16f) || !(Projectile.Bottom.Y > worldPosition.Y) || !(Projectile.Top.Y < worldPosition.Y + 16f) || Main.myPlayer != Projectile.owner)
                         continue;
 
-                    Tile t = Main.tile[i, j];
+                    if (WallID.Sets.Conversion.Stone[t.WallType] || WoodWalls[t.WallType] || DirtWalls[t.WallType]) {
+                        t.WallType = WallID.GoldBrick; // Gold or platium? The world tells.
+                        WorldGen.SquareWallFrame(i, j);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(-1, i, j);
+                    }
+
+                    if (!Main.tile[i, j].HasTile)
+                        continue;
+
                     if (TileID.Sets.Conversion.Stone[t.TileType]) {
                         t.TileType = (ushort)WorldGen.SavedOreTiers.Gold; // Gold or platium? The world tells.
                         WorldGen.SquareTileFrame(i, j);
@@ -58,7 +77,28 @@ namespace OverpoweredGoldDust
                             NetMessage.SendTileSquare(-1, i, j);
                     }
 
-                    if (t.TileType == TileID.Containers || t.TileType == TileID.FakeContainers && BasicChestFrameX.Contains(t.TileFrameX / 36)) {
+                    if (WoodBlocks[t.TileType]) {
+                        t.TileType = TileID.GoldBrick; // Gold or platium? The world tells.
+                        WorldGen.SquareTileFrame(i, j);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(-1, i, j);
+                    }
+
+                    if (t.TileType == TileID.Platforms && BasicPlatformsFrameY.Contains(t.TileFrameY / 18)) {
+                        Main.tile[i, j].TileFrameY = 31 * 18;
+                        WorldGen.SquareTileFrame(i, j);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(-1, i, j);
+                    }
+
+                    if (t.TileType == TileID.CopperCoinPile || t.TileType == TileID.SilverCoinPile) {
+                        t.TileType = TileID.GoldCoinPile; // Gold or platium? The world tells.
+                        WorldGen.SquareTileFrame(i, j);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(-1, i, j);
+                    }
+
+                    if ((t.TileType == TileID.Containers || t.TileType == TileID.FakeContainers) && BasicChestsFrameX.Contains(t.TileFrameX / 36)) {
                         // the left-top position of the chest
                         Point key = new Point(i, j);
                         if (t.TileFrameX % 36 != 0)
@@ -134,6 +174,10 @@ namespace OverpoweredGoldDust
                     if (npc.type == NPCID.Worm || npc.type == NPCID.TruffleWorm || npc.type == NPCID.TruffleWormDigger) {
                         npc.Transform(NPCID.GoldWorm);
                     }
+                }
+
+                foreach (var item in from i in Main.item where i.active && myRect.Intersects(i.getRect()) && (i.type == ItemID.CopperCoin || i.type == ItemID.SilverCoin) select i) {
+                    item.SetDefaults(ItemID.GoldCoin);
                 }
             }
         }

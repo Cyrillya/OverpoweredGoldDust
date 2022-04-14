@@ -1,7 +1,10 @@
 Mods: {
 	OverpoweredGoldDust: {
 		ItemTooltip: {
-			GoldDust: 传播黄金
+			MagicalGoldDust: 传播黄金
+		}
+		ItemName: {
+			MagicalGoldDust: 魔法金尘
 		}
 	}
 }

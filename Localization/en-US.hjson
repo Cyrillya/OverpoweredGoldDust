@@ -1,7 +1,10 @@
 Mods: {
 	OverpoweredGoldDust: {
 		ItemTooltip: {
-			GoldDust: Spreads the gold
+			MagicalGoldDust: Spreads the gold
+		}
+		ItemName: {
+			MagicalGoldDust: Magical Gold Dust
 		}
 	}
 }

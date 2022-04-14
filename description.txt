@@ -1,12 +1,13 @@
-﻿This mod gives gold dust the ability to turn stones, critters and slimes into gold!
-It can also turn basic chests (wooden chests) into golden chests.
-The mod also adds a crafting recipe for gold dust so you can get it pre-hardmode:
-[i:19]/[i:706] -> [i:1348]
+﻿This mod adds a new item - Magical Gold Dust
+It has the ability to turn stones, critters, slime, chests, platforms, wood, walls and coins into gold!
+There is a crafting recipe to craft magical gold dust:
+[Fallen Star x5] + [Gold/Platinum Bar x5] + [Gold Dust x10] -> [Magic Gold Dust x3]
+You should craft it next to a furnace.
 
-此Mod给予金尘点石成金的能力.
-你现在可以用它来将石头、小动物和史莱姆变成金子!
-它还可以将基本箱子（木制箱子）变成金色箱子.
-该Mod同时为金尘添加了一个合成配方，你可以在肉前就获得它:
-[i:19]/[i:706] -> [i:1348]
+此Mod增加了一个新物品 - 魔法金尘.
+它有能力将石头、小动物、史莱姆、箱子、平台、木头、墙壁、铜币和银币变成金子！
+魔法金尘有一个合成配方:
+[坠星x5] + [金锭/铂金锭x5] + [金尘x10] -> [魔法金尘x3]
+需要靠近熔炉制作.
 
 Github: https://github.com/Crapsky233/OverpoweredGoldDust
