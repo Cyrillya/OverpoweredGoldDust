@@ -80,14 +80,12 @@ namespace OverpoweredGoldDust
             CreateRecipe(3)
                 .AddIngredient(ItemID.FallenStar, 5)
                 .AddIngredient(ItemID.GoldBar, 5)
-                .AddIngredient(ItemID.GoldDust, 10)
                 .AddTile(TileID.Furnaces)
                 .Register();
 
             CreateRecipe(3)
                 .AddIngredient(ItemID.FallenStar, 5)
                 .AddIngredient(ItemID.PlatinumBar, 5)
-                .AddIngredient(ItemID.GoldDust, 10)
                 .AddTile(TileID.Furnaces)
                 .Register();
         }
