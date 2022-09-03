@@ -176,8 +176,16 @@ namespace OverpoweredGoldDust
                     }
                 }
 
-                foreach (var item in from i in Main.item where i.active && myRect.Intersects(i.getRect()) && (i.type == ItemID.CopperCoin || i.type == ItemID.SilverCoin) select i) {
-                    item.SetDefaults(ItemID.GoldCoin);
+                foreach (var item in from i in Main.item where i.active && myRect.Intersects(i.getRect()) select i) {
+                    if (item.type == ItemID.CopperCoin || item.type == ItemID.SilverCoin) {
+                        item.SetDefaults(ItemID.GoldCoin);
+                    }
+                    if (item.type == ItemID.WoodenCrate || item.type == ItemID.IronCrate) {
+                        item.SetDefaults(ItemID.GoldenCrate);
+                    }
+                    if (item.type == ItemID.WoodenCrateHard || item.type == ItemID.IronCrateHard) {
+                        item.SetDefaults(ItemID.GoldenCrateHard);
+                    }
                 }
             }
         }
