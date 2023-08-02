@@ -1,4 +1,4 @@
 displayName = Gold Dust Turns Everything Into Gold
 author = -Cyril-
-version = 1.5.1
+version = 1.6
 homepage = https://github.com/Crapsky233/OverpoweredGoldDust
