@@ -50,7 +50,7 @@ namespace OverpoweredGoldDust
             GameShaders.Armor.Apply(GameShaders.Armor.GetShaderIdFromItemId(SHADER_DYE_TYPE), Item, null);
 
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Vector2 drawPos = position + origin;
+            Vector2 drawPos = position;
             spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();

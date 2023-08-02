@@ -1,10 +1,12 @@
 Mods: {
 	OverpoweredGoldDust: {
-		ItemTooltip: {
-			MagicalGoldDust: Spreads the gold
+		Items: {
+			MagicalGoldDust: {
+				DisplayName: Magical Gold Dust
+				Tooltip: Spreads the gold
+			}
 		}
-		ItemName: {
-			MagicalGoldDust: Magical Gold Dust
-		}
+
+		Projectiles.GoldDust.DisplayName: Magical Gold Dust
 	}
 }
